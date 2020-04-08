@@ -3,21 +3,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 /* ctrl +space để gợi ý cho version trong file POM, nên chọn phiên bản mới nhất
 - nhưng version anpha là chưa đang test chưa dùng
 - Trong file có tiếng việt thì phải lưu với TUF-8 nếu không sẽ bị lôi font
+- Trong Xpath có thẻ ghi tagname hoặc không, nếu không ghi tagname thì sẽ thay bằng kí tự "*" đại diện cho tất cả các tagname
 */
 
 public class XpathCSS {
-    WebDriver driver;
+    WebDriver driver; // khai báo một biến để dùng được các API của WebDriver
     @Before
     public void BeforeTest (){
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\hanh\\IdeaProjects\\AutomationThayDam\\.idea\\drivers\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\hanh\\IdeaProjects\\AutomationThayDam\\.idea\\drivers\\chromedriver.exe"); //set đường dẫn đến webDriver
+        driver = new ChromeDriver(); // Khởi tạo trình duyệt
+        driver.manage().timeouts().implicitlyWait(30, SECONDS);
         driver.navigate().to("http://14.225.3.184:8081/#/");
         driver.manage().window().maximize();
     }
@@ -26,69 +31,54 @@ public class XpathCSS {
         driver.quit();
         driver.close();
     }
-    /* Trong selenium có 8 loại locator
-    - Phương thức findElement(By.) để tìm kiếm vị trí của locator
-     */
+
+
     @Test
-    public void Xpath() throws InterruptedException {
-/* Cấu tạo của 1 element có 3 phần chính: tagName (thẻ HTML), attributeNam (id, class, type, name, email, title, value,...)
-và attributeValue (là giá trị của các attributeName)
-- Các loại Element: label, textbox, combobox, checkbox, radiobutton, button, linktext, selectbox, AreaText,Date Time Picke,
-Menu, SubMenu, Slider, Image, Tooltip, Table, Icon, Video, TimeLine,...
-- Nếu dùng findElement chỉ nhận kiểu giá trị là String
-  driver.findElement(By.id());
-  driver.findElement(By.name());
-  driver.findElement(By.class());
-  driver.findElement(By.cssSelector());
-  driver.findElement(By.linkText());
-  driver.findElement(By.partialLinkText());
-  driver.findElement(By.tagName());
-  driver.findElement(By.xpath());
- */
-        driver.findElement(By.id("userame")).sendKeys("Công ty ABC"); // sendkeys là để nhập giá trị cho element.
-        driver.findElement(By.id("userame")).clear(); // clear là xóa giá trị đã nhập
-        driver.findElement(By.id("userame")).click(); // click chuột vào element
-        driver.findElement(By.tagName("a")).getSize(); // Lấy ra số lượng của các thẻ a
-        Thread.sleep(100); // sleep là để dững bao nhiêu giây, cái này phải có exception
-    }
-}
-/* Để duplicated được các dòng code ta sẽ setup key như sau (trên eclip)
-- Vào window --> Reference --> seach từ khóa Keys --> seach duplicate line (có thể bết được phím tắt hoặc sửa lại phím tắt đó)
-==> Nếu sử dụng Xpath nó sẽ handle được 7 loại locator (tốc độ chậm), và Css có thể handle được 6 locator (tốc độ nhanh hơn Xpath)
+    public void Xpath()  {
+        /* WebDriver - Những API dùng với trình duyệt
+- Tất cả các API có đuôi là webDriver thông qua biến driver.
 */
-/* Cấu tạo của 1 Xpath Format: //tagName[@attribute=Value] --- //input[@id=1234].
-- Cấu tạo 1 Xpath Type:
-+ Absolute Xpath (Xpath tuyệt đối): là xpath đi từ thẻ HTML cho đến vị trí mình cần lấy
-+ Relative Xpath (Xpath tương đối): Ta cần custom lại để xpath không bị sai khi thay đổi UI, nên lấy thuộc tính duy nhất
-gần với locator
-chú ý không nên dùng href vì sẽ bị thay đổi domain khi đổi môi trường chạy test
-- các kỹ thuật lấy xpath
-+ Lấy attribute nào có thể định danh dc đối tượng là duy nhất.
-+ Dựa vào thẻ cha để định danh thẻ con mà không cần đến attribute nào của thẻ để định danh thẻ là duy nhất
-//Xpathcha//Xpathcon (tìm thằng cha là duy nhất đê định danh thằng con là duy nhất )
-+ Lấy Xpath bằng contains: //tagName[contains(@attribute,Value)] - chạy chậm vì lấy giá trị tương đối, phạm vi quét rộng hơn
-+ Ta có thể thêm index vào hoạt code: //tagName[contains(@attribute,Value)][1]
-+ Kỹ thuật contains[text()]: //tagName[contains(text(),'chuỗi cần tìm')]
-+ Kỹ thuật text()=: //tagName[text()='chuỗi cần tìm')]
-+ Kỹ thuật Start- with: //tagName[starts-with(text(),'chứa chuỗi cần tìm')] -- Bắt đầu bằng đoạn text
-+ Kỹ thuật AND và OR: Kết hợp nhiều yêu cầu khác nhau: điều kiện 1 and điều kiện 2. Cả 2 điều phải đúng (2 điều kiện cùng 1 //thẻ)
-+ Kỹ thuật Xpath AXES: Các từ khóa trong ký thuật này gồm có
--> ancestor (tổ tiên, tính từ ông chở đi)
-->parent (cha)
--> preceding (Bác)
--> following (chú)
--> child (con)
--> preceding-sibling (anh của node hiện tại)
--> following-sibling (em của node hiện tại)
--> descendant (con cháu của lớp hiện tại)
-Xpath/key phả hệ::tên thẻ cần lấy
-+ Framework sẽ giúp sử lý được các element chỉ cần 1 xpath có thể click vào tất cả các element (dynamic- locator)
-/* Không dùng tool hỗ trợ để bắt Xpath: Nhấn ctrl + F trên tab Element
-- Để verify ( kiểm chứng) ta sang tab console: xpath ($x("truyền xpath"), Css $$("css") Jquery $("jquery")
-- Chuyển 1 tip từ xpath sang Css: Nếu 1 element có định danh là duy nhất thì:
-ID: #id
-Class: .class (các chuỗi trong class sẽ bị ngăn cách bởi dấu " " nếu muốn lấy hết thì ta thay dấu cách bằng dấu "."
-parent node: Thẻ chá > thẻ con
-Xpath --> css, Bỏ // và @ trong xpath đi
-Lưu ý: css không được dùng text, và nó chỉ đi được 1 note
- */
+        driver.get("url"); // mở 1 trình duyệt lên - Kiểu dữ liệu trả về là không cần trả về
+        driver.getCurrentUrl(); // Trả về URL hiện tại (khi có kiểu trả về thì khai báo biến để lưu các dữ liệu)
+        driver.getPageSource(); // lấy ra HTML của page hiện tại
+        driver.getTitle(); //lấy ra title của page hiện tại
+        driver.getWindowHandle();
+        driver.getWindowHandles();
+        driver.close(); // đóng trình duyệt (đóng tab đang đứng)
+        driver.quit(); // đóng trình duyệt (đóng tất cả các tab trên trình duyệt)
+        driver.manage(); // những api có optiom phía sau là những hàm đi theo sau api manage. (quản lý)
+//        driver.manage().timeouts().implicitlyWait("1000",TimeUnit.MICROSECONDS) -- timeout cho element và thường có exception
+        driver.manage().timeouts().pageLoadTimeout(10000,SECONDS); // timeout để oad page
+        driver.manage().timeouts().setScriptTimeout(10000,SECONDS); // inject đoạn code jS/jquery vào brower
+        driver.navigate().back(); // Back về page trước đó
+        driver.navigate().forward(); // chuyển tiếp sang page tiếp theo
+        driver.navigate().refresh(); // f5 page
+        driver.navigate().to("URL"); // Mở 1 trình duyệt (tracking để save history)
+        driver.switchTo().alert(); // để handle cho element
+        driver.switchTo().frame("i"); // để handle frame và iframe
+// WebElement: có 2 cách tương tác trực tiếp thông qua findElement/findElements (sử dụng các locator nhưng chỉ dùng được 1 step),
+        driver.findElement(By.xpath("dhfdjh")).click();
+// Tương tác gián tiếp (dùng được nhiều step) - Khởi tạo 1 webelement,
+        WebElement emailTexbox = driver.findElement(By.xpath("dgdgjg"));
+        emailTexbox.sendKeys(); // nhập text
+        emailTexbox.clear(); // Xóa dữ liệu cũ trước khi thao tác (luôn đi cùng sendkeys)
+        emailTexbox.click(); // click vào emlement
+        emailTexbox.getAttribute(""); // Lấy attribute của những gợi ý ẩn không có text trong element
+        emailTexbox.getCssValue(""); // get ra giá trị của Css (các thuộc tính của css, ví dụ như màu backgroud - cái này ở stype)
+        emailTexbox.getLocation(); // Lấy ra vị trí tọa độ của element
+        emailTexbox.getSize(); // lấy ra chiều rộng và chiều cao của element
+        emailTexbox.getTagName(); // lấy ra tên thẻ HTML
+        emailTexbox.getText(); //Get ra text nằm trong element
+        emailTexbox.isDisplayed(); // kiểm tra element có hiển thị không trả về kiểu giá trị boolean, khi element hiện thì chạy tiếp luôn
+        emailTexbox.isEnabled(); // Kiểm tra xem element có thao tác được hay không
+        emailTexbox.isSelected(); // Kiểm tra xem element đã được chọn hay chưa (dùng cho radiobutton và checkbox)
+        emailTexbox.submit(); // Truyền 1 hành động vào form (login form, ... Nó giống như phím enter)
+
+    }
+    public int randomNumber(){ // hàm random
+        Random random = new Random();
+        int number = random.nextInt(5697);
+        return number;
+
+    }
+    }
