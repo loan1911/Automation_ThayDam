@@ -11,13 +11,13 @@ import java.util.Set;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class WindowsTab {
+public class JavascriptExecutor {
     WebDriver driver;
     WebDriverWait waitExplicit;
-    JavascriptExecutor javascriptExecutor;
+    org.openqa.selenium.JavascriptExecutor javascriptExecutor;
     @Before
     public void BeforeTest() {
-        javascriptExecutor = (JavascriptExecutor) driver; // ép kiểu
+        javascriptExecutor = (org.openqa.selenium.JavascriptExecutor) driver; // ép kiểu
         Actions actions = new Actions(driver); // Khởi tạo
         waitExplicit = new WebDriverWait(driver, 30); // tạo thư viện để chờ cho các item trong dropdown xuất hiên
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\hanh\\IdeaProjects\\AutomationThayDam\\.idea\\drivers\\chromedriver.exe"); //set đường dẫn đến webDriver
@@ -37,22 +37,20 @@ public class WindowsTab {
 
     @Test
     public void TC_1(String title) {
-/* các case của windows:
-case 1: khi có 2 tab thì thằng đầu là parent Windows, thằng mở ra là child windows
--compare (đối chiếu thằng cha và thằng con): get id thằng cha, sau đó bật ra thằng con, lấy id của cả cha và con, sau đó
-switch qua thằng con (driver.switchTo().windows(GUID);
-case 2: có thể cave được >= 2 tab
-- get ra guid sau đó get ra title của từng tab : đối chiếu với title mong muốn thì chuyển quá
-- Set khác vơi list và array là set không cho lưu các giá trị trùng nhau
+/* Dùng consol để reject js khi f12
+- Khi có date time picker ta xóa type = date đi để trở về dang text để handle
+Sử lý được khi chạy test lúc pass lúc không tên IE
++ Các vấn để cần handle với js mà selenium không xử lý được
+- search với big data - IE
+- click/switch page với IE
+- Scroll
+- Remove Attribute
+- hightlight element khi demo
+- get value on page
+* Tại sao nhiều web trên IE chạy chậm hoặc không ổn định được nhưng vẫn dùng vì vẫn có các công ty vẫn đang dùng
+- Thư viên cần import của js là javascriptExecutor (nó cũng là 1 thư viện của selenium)
 
 */
-Set<String> allWindows = driver.getWindowHandles(); // get ra tất cả các ID của các tab windows
-        for (String windows : allWindows){
-            driver.switchTo().window(windows);
-            String currentWindows = driver.getTitle();
-            if(currentWindows.equals(title));
-            break;
-        }
     }
 
 }
