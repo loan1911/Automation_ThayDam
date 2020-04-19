@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce66f98a-ef3d-49cc-b898-7be27da8309a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/common/AbstractPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/feature/L3PageObjectPattern.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/interfaces/HomePageUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/pageObjects/HomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Wait.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/interfaces/LoginPageUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/pageObjects/LoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/feature/L3PageObjectPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/feature/L4DesignPatternSingletonPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/pageObjects/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pageObjects/HomePage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,17 +75,17 @@
       <recent name="C:\Users\hanh\IdeaProjects\AutomationThayDam\.idea\drivers" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.L3PageObjectPattern.TC_1Explicit">
-    <configuration name="L3PageObjectPattern" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.L4DesignPatternSingletonPattern.TC_01_Login">
+    <configuration name="L4DesignPatternSingletonPattern" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AutomationThayDam" />
       <option name="PACKAGE_NAME" value="feature" />
-      <option name="MAIN_CLASS_NAME" value="feature.L3PageObjectPattern" />
+      <option name="MAIN_CLASS_NAME" value="feature.L4DesignPatternSingletonPattern" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="L3PageObjectPattern.TC_1Explicit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="L4DesignPatternSingletonPattern.TC_01_Login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AutomationThayDam" />
       <extension name="coverage">
         <pattern>
@@ -95,7 +94,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="feature" />
-      <option name="MAIN_CLASS_NAME" value="feature.L3PageObjectPattern" />
+      <option name="MAIN_CLASS_NAME" value="feature.L4DesignPatternSingletonPattern" />
+      <option name="METHOD_NAME" value="TC_01_Login" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="L4DesignPatternSingletonPattern.TC_1Explicit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AutomationThayDam" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="feature.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="feature" />
+      <option name="MAIN_CLASS_NAME" value="feature.L4DesignPatternSingletonPattern" />
       <option name="METHOD_NAME" value="TC_1Explicit" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -132,29 +147,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Lever2BuildAbstractPageSeleniumAPIWrapper.abstractPageApply" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AutomationThayDam" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="java.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="java" />
-      <option name="MAIN_CLASS_NAME" value="java.Lever2BuildAbstractPageSeleniumAPIWrapper" />
-      <option name="METHOD_NAME" value="abstractPageApply" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.L3PageObjectPattern.TC_1Explicit" />
-        <item itemvalue="JUnit.L3PageObjectPattern" />
+        <item itemvalue="JUnit.L4DesignPatternSingletonPattern.TC_01_Login" />
+        <item itemvalue="JUnit.L4DesignPatternSingletonPattern" />
+        <item itemvalue="JUnit.L4DesignPatternSingletonPattern.TC_1Explicit" />
         <item itemvalue="JUnit.Lever2BuildAbstractPageSeleniumAPIWrapper (1)" />
         <item itemvalue="JUnit.Lever2BuildAbstractPageSeleniumAPIWrapper" />
-        <item itemvalue="JUnit.Lever2BuildAbstractPageSeleniumAPIWrapper.abstractPageApply" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +186,8 @@
       <workItem from="1587045626697" duration="9799000" />
       <workItem from="1587097055050" duration="12827000" />
       <workItem from="1587131925504" duration="9064000" />
-      <workItem from="1587188577427" duration="3558000" />
+      <workItem from="1587188577427" duration="5807000" />
+      <workItem from="1587271884252" duration="2622000" />
     </task>
     <servers />
   </component>
@@ -203,10 +203,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="457" y="155" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1586533849929" />
-    <state x="488" y="64" key="#com.intellij.ide.util.MemberChooser" timestamp="1587142361793">
+    <state x="488" y="64" key="#com.intellij.ide.util.MemberChooser" timestamp="1587282292931">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="64" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1587142361793" />
+    <state x="488" y="64" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1587282292931" />
     <state x="316" y="37" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1586962902938">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -223,22 +223,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1587048093441" />
-    <state width="1287" height="20" key="GridCell.Tab.0.bottom" timestamp="1587142963777">
+    <state width="1287" height="326" key="GridCell.Tab.0.bottom" timestamp="1587197604875">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1287" height="20" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587142963777" />
-    <state width="1287" height="20" key="GridCell.Tab.0.center" timestamp="1587142963777">
+    <state width="1287" height="326" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587197604875" />
+    <state width="1287" height="326" key="GridCell.Tab.0.center" timestamp="1587197604874">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1287" height="20" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1587142963777" />
-    <state width="1287" height="20" key="GridCell.Tab.0.left" timestamp="1587142963777">
+    <state width="1287" height="326" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1587197604874" />
+    <state width="1287" height="326" key="GridCell.Tab.0.left" timestamp="1587197604874">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1287" height="20" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1587142963777" />
-    <state width="1287" height="20" key="GridCell.Tab.0.right" timestamp="1587142963777">
+    <state width="1287" height="326" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1587197604874" />
+    <state width="1287" height="326" key="GridCell.Tab.0.right" timestamp="1587197604874">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1287" height="20" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1587142963777" />
+    <state width="1287" height="326" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1587197604874" />
     <state x="213" y="4" key="Maven.ArtifactSearchDialog" timestamp="1586245560512">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

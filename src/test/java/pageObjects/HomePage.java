@@ -1,6 +1,7 @@
 package pageObjects;
 
 import common.AbstractPage;
+import common.PageFactoryManager;
 import interfaces.HomePageUI;
 import org.openqa.selenium.WebDriver;
 
@@ -21,9 +22,11 @@ public class HomePage extends AbstractPage {
         sendkeyToElement(driver, HomePageUI.PASSWORD_TEXTBOX, passValue);
     }
 
-    public void clickButtonLogin() {
+    public LoginPage clickButtonLogin() {
         waitForElementVisible(driver,HomePageUI.BUTTON_LOGIN);
         clickToElement(driver, HomePageUI.BUTTON_LOGIN);
+//        return new LoginPage(driver);
+        return PageFactoryManager.getLoginPage(driver);
 
     }
 }
