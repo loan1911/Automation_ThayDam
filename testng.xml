@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="3" >
+
+    <test name="RUN_TEST_FIREFOX">
+        <parameter name="browserName" value="firefox"></parameter>
+        <classes>
+            <class name="feature.L5MultipleBrowserandParallelTesting"/>
+
+        </classes>
+    </test>
+
+    <test name="RUN_TEST_CHROME">
+        <parameter name="browserName" value="chrome"></parameter>
+        <classes>
+            <class name="feature.L5MultipleBrowserandParallelTesting"/>
+        </classes>
+    </test>
+
+    <test name="RUN_TEST_CHROME_HEADLED">
+        <parameter name="browserName" value="chromeheadless"></parameter>
+        <classes>
+            <class name="feature.L5MultipleBrowserandParallelTesting"/>
+        </classes>
+    </test>
+
+</suite>
