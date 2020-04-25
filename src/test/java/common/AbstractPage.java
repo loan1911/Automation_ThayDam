@@ -1,16 +1,18 @@
 package common;
 
+import interfaces.AbstractPageUI;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.BaoNoPage;
+import pageObjects.PhieuThuPage;
 
 import java.util.List;
 import java.util.Set;
 
-// Abstractpage là những hàm common cho package pageobject, Abstracttest là hàm common cho testcase (feature)
-public class AbstractPage { // Những tham số của hàm common là động
+public class AbstractPage {
     WebElement element;
     List<WebElement> elements;
     JavascriptExecutor javascriptExecutor;
@@ -46,6 +48,7 @@ public class AbstractPage { // Những tham số của hàm common là động
     }
 
     public void forwardToNextPage(WebDriver driver) {
+
         driver.navigate().forward();
     }
 
@@ -67,11 +70,13 @@ public class AbstractPage { // Những tham số của hàm common là động
 
     // các hàm với WebElement
     public void clickToElement(WebDriver driver, String locator) { // tham số mặc định với element là 2 tham số
+        hightLightElement(driver,locator);
         element = driver.findElement(By.xpath(locator)); // khai báo WebElement
         element.click();
     }
 
     public void sendkeyToElement(WebDriver driver, String locator, String value) {
+        hightLightElement(driver,locator);
         element = driver.findElement(By.xpath(locator));
         element.sendKeys(value);
     }
@@ -88,8 +93,9 @@ public class AbstractPage { // Những tham số của hàm common là động
         return select.getFirstSelectedOption().getText();
     }
 
-    public void SelectItemCustomDropdown(WebDriver driver, String parentXpath, String allItemXpath, String expectedValueItem) throws InterruptedException {
-        waitExplicit = new WebDriverWait(driver, 30);
+    public void selectItemCustomDropdown(WebDriver driver, String parentXpath, String allItemXpath, String expectedValueItem) throws InterruptedException {
+        waitExplicit = new WebDriverWait(driver, longTimeout);
+        javascriptExecutor = (JavascriptExecutor) driver;
         WebElement parentDropdown = driver.findElement(By.xpath(parentXpath));
         javascriptExecutor.executeScript("arguments[0].click();", parentDropdown); // click vào dropdown
         waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemXpath))); // chờ cho tất cả các element xuất hiện
@@ -253,5 +259,42 @@ public class AbstractPage { // Những tham số của hàm common là động
         waitExplicit = new WebDriverWait(driver, longTimeout);
         waitExplicit.until(ExpectedConditions.alertIsPresent());
     }
-
+// Viết các hàm để mở ra các page đó
+    public PhieuThuPage openOnPhieuThuPage(WebDriver driver){
+        waitForElementVisible(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
+        if(isControlDisplayed(driver, AbstractPageUI.PHIEU_THU)){
+            clickToElement(driver, AbstractPageUI.PHIEU_THU);
+        }else {
+            clickToElement(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
+            waitForElementVisible(driver, AbstractPageUI.PHIEU_THU);
+            clickToElement(driver, AbstractPageUI.PHIEU_THU);
+        }
+        return PageFactoryManager.getPhieuThuPage(driver);
+    }
+    public BaoNoPage openOnBaoNoPage(WebDriver driver) {
+        waitForElementVisible(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
+        if (isControlDisplayed(driver, AbstractPageUI.BAO_NO)) {
+            clickToElement(driver, AbstractPageUI.BAO_NO);
+        } else {
+            clickToElement(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
+            waitForElementVisible(driver, AbstractPageUI.BAO_NO);
+            clickToElement(driver, AbstractPageUI.BAO_NO);
+        }
+        return PageFactoryManager.getBaoNoPage(driver);
+    }
+// hight light Element dùng cho hàm wait, check displayed, click, sendkey, để cho khách hàng biết mình chuẩn bị thao tác với element nào
+public void hightLightElement(WebDriver driver, String locator) {
+    javascriptExecutor = (JavascriptExecutor) driver;
+    element = driver.findElement(By.xpath(locator));
+    String originalStyle = element.getAttribute("style");
+    javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
+            "style", "border:3px solid red;border - style:dashed;");
+    try {
+        Thread.sleep(800);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
+            "style", originalStyle);
+}
 }

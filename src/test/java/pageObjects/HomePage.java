@@ -6,11 +6,11 @@ import interfaces.HomePageUI;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends AbstractPage {
+    private WebDriver driver;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
-
-    private WebDriver driver;
 
     public void fieldUserName(String userValue) {
         waitForElementVisible(driver,HomePageUI.USER_NAME_TEXTBOX);

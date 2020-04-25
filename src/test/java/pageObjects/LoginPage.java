@@ -1,7 +1,9 @@
 package pageObjects;
 
 import common.AbstractPage;
+import common.PageFactoryManager;
 import interfaces.LoginPageUI;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends AbstractPage {
@@ -10,12 +12,13 @@ public class LoginPage extends AbstractPage {
     }
     private WebDriver driver;
 
-    public void fieldCompanyName(String companyValue) {
-        waitForElementVisible(driver, LoginPageUI.COMPANY_NAME_TEXTBOX);
-        sendkeyToElement(driver, LoginPageUI.COMPANY_NAME_TEXTBOX, companyValue);
+    public void clickComboboxCompany() {
+        waitForElementVisible(driver, LoginPageUI.COMBOBOX_COMPANY);
+        sendkeyToElement(driver,LoginPageUI.COMBOBOX_COMPANY, "Chi nhánh 1" );
     }
-    public void clickButtonLogin() {
+    public TrangChuPage clickButtonLogin() {
         waitForElementVisible(driver, LoginPageUI.LOGIN_BUTTON);
         clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
+        return PageFactoryManager.getTrangchuPage(driver);
     }
 }

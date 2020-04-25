@@ -1,26 +1,26 @@
 package common;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.HomePage;
-import pageObjects.LoginPage;
+import pageObjects.*;
+
 public class PageFactoryManager {
 
-        private static HomePage homePage;
-        private static LoginPage loginPage;
+    public static HomePage getHomePage(WebDriver driver) {
 
-        public static HomePage getHomePage(WebDriver driver){
-//            if (homePage == null){
-//                homePage = new HomePage(driver);
-//            }
-//            return homePage;
-            return new HomePage(driver);
-        }
-        public static LoginPage getLoginPage(WebDriver driver){
-//            if (loginPage == null){
-//                loginPage = new LoginPage(driver);
-//            }
-//            return loginPage;
-            return new LoginPage(driver);
-        }
+        return new HomePage(driver);
     }
 
+    public static LoginPage getLoginPage(WebDriver driver) {
+        return new LoginPage(driver);
+    }
+
+    public static TrangChuPage getTrangchuPage(WebDriver driver) {
+        return new TrangChuPage(driver);
+    }
+    public static PhieuThuPage getPhieuThuPage(WebDriver driver) {
+        return new PhieuThuPage(driver);
+    }
+    public static BaoNoPage getBaoNoPage(WebDriver driver) {
+        return new BaoNoPage(driver);
+    }
+}
