@@ -27,8 +27,8 @@ public class AbstractTest {
             options.addArguments("window-size=1366x768");
             driver = new ChromeDriver(options);
         }
-        driver.navigate().to("http://14.225.3.184:8081/#/");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.navigate().to(Constants.TEST_URL);
+        driver.manage().timeouts().implicitlyWait(Constants.LONG_TIMEOUT, TimeUnit.SECONDS);
         return driver;
     }
 

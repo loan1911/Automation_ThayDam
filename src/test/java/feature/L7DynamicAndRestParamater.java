@@ -1,16 +1,5 @@
-/* Các chức năng của menu luôn cố định khi mình click vào bất kỳ page .
-- Các testcase phải theo luông chức năng. phải có sự kết nối giữa các test không được chuyển page linh tinh
-- Khi các một hành động chuyển qua page mới thì phải return về page đó
-- Khi tạo ra một page mới cần làm 3 việc sau:
-+ Tạo page objectclass
-+ Tạo pageUI class
-+ Tạo pageFactoryManager
---> Khi mà chuyển từ 1 page qua các page khác mỗi màn ta lại phải viết 1 hàm trả về hàm đó để chuyển page dẫn đến viết quá nhiều hàm
---> Ta se dùng framework để mỗi framework chỉ dùng 1 hàm để gọi
-- Các chức năng ở menu sẽ được cố định và có thể di chuyển qua nhau ta sẽ design ra một page khác không thể design chung vào pageobject
---> dùng cho cho toàn bộ pageObject mình sẽ viết trong abstractPage
-
-
+/* String format là định dạng chuỗi
+- %s là đại diện cho 2 chuỗi nào đó, đây là 1 tham số và được truyền từ bên ngoài
 */
 package feature;
 
@@ -25,7 +14,7 @@ import pageObjects.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class L6WebdriverLifeCycle {
+public class L7DynamicAndRestParamater {
     WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;
@@ -55,13 +44,28 @@ public class L6WebdriverLifeCycle {
         loginPage = homePage.clickButtonLogin();
         loginPage.clickComboboxCompany();
         trangChuPage = loginPage.clickButtonLogin();
+        trangChuPage.clickIconMenu();
+        baoNoPage = (BaoNoPage) trangChuPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Báo Nợ");
+        phieuThuPage = (PhieuThuPage) baoNoPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Phiếu thu");
+
     }
 //    @Test
-//    public void TC_02_WebDriverLifeCycle(){
+//    public void TC_02_WebDriverLifeCycle(){ // mở MultiPage
 //        baoNoPage = trangChuPage.openOnBaoNoPage(driver); // chuyển page
+//        phieuThuPage = baoNoPage.openOnPhieuThuPage(driver);
 //    }
-//    public void TC_03_HightlightElement(){
-//
+//    @Test
+//    public void TC_03_Dynamic(){ // chỉ có 1 hàm để mở multiPage
+//        baoNoPage = (BaoNoPage) trangChuPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Báo Nợ" );
+//        phieuThuPage = (PhieuThuPage) baoNoPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG", "Phiếu thu");
+//}
+//    @Test
+//    public void TC_03_Dynamics(){ // dùng khi có quá nhiều page
+//        trangChuPage.openMultiPages(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Báo Nợ" );
+//        baoNoPage = PageFactoryManager.getBaoNoPage(driver);
+//        baoNoPage.openMultiPages(driver, "TIỀN MẶT VÀ NGÂN HÀNG", "Phiếu thu");
+//        phieuThuPage = PageFactoryManager.getPhieuThuPage(driver);
 //    }
+
 
 }

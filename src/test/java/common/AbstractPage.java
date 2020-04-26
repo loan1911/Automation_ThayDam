@@ -19,8 +19,6 @@ public class AbstractPage {
     WebDriverWait waitExplicit; // dùng cho element
     Actions action;
     By by;
-    Long shortTimeout = Long.valueOf(5);
-    Long longTimeout = Long.valueOf(30);
 
     // các hàm với WebBrower
     public void openAnyUrl(WebDriver driver, String URL) { // luôn luôn truyền tham số Webdriver
@@ -68,15 +66,24 @@ public class AbstractPage {
         driver.switchTo().alert().sendKeys("Hanh");
     }
 
-    // các hàm với WebElement
-    public void clickToElement(WebDriver driver, String locator) { // tham số mặc định với element là 2 tham số
-        hightLightElement(driver,locator);
+    //     các hàm với WebElement
+    public void clickToElement(WebDriver driver, String locator, String... values) { // tham số mặc định với element là 2 tham số
+        hightLightElement(driver, locator);
+        locator = String.format(locator, (Object[]) values);
         element = driver.findElement(By.xpath(locator)); // khai báo WebElement
         element.click();
     }
 
+    public void clickToElement(WebDriver driver, String locator, String value) { // tham số mặc định với element là 2 tham số
+        locator = String.format(locator, value);
+        hightLightElement(driver, locator);
+        element = driver.findElement(By.xpath(locator)); // khai báo WebElement
+        System.out.println(element);
+        element.click();
+    }
+
     public void sendkeyToElement(WebDriver driver, String locator, String value) {
-        hightLightElement(driver,locator);
+        hightLightElement(driver, locator);
         element = driver.findElement(By.xpath(locator));
         element.sendKeys(value);
     }
@@ -94,7 +101,7 @@ public class AbstractPage {
     }
 
     public void selectItemCustomDropdown(WebDriver driver, String parentXpath, String allItemXpath, String expectedValueItem) throws InterruptedException {
-        waitExplicit = new WebDriverWait(driver, longTimeout);
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
         javascriptExecutor = (JavascriptExecutor) driver;
         WebElement parentDropdown = driver.findElement(By.xpath(parentXpath));
         javascriptExecutor.executeScript("arguments[0].click();", parentDropdown); // click vào dropdown
@@ -144,8 +151,16 @@ public class AbstractPage {
         }
     }
 
-    public boolean isControlDisplayed(WebDriver driver, String locator) { //Kiểm tra xem 1 element nào đó được chọn hay không
-        element = driver.findElement(By.xpath(locator));
+    public boolean isControlDisplayed(WebDriver driver, String locatorElement, String... values) { //Kiểm tra xem 1 element nào đó được chọn hay không
+        locatorElement = String.format(locatorElement, (Object[]) values);
+        element = driver.findElement(By.xpath(locatorElement));
+        return element.isDisplayed();
+    }
+
+    public boolean isControlDisplayed(WebDriver driver, String locatorElement, String value) {
+        locatorElement = String.format(locatorElement, value);
+        element = driver.findElement(By.xpath(locatorElement));
+        System.out.println(element);
         return element.isDisplayed();
     }
 
@@ -235,42 +250,58 @@ public class AbstractPage {
         action = new Actions(driver);
         action.keyUp(element, key);
     }
-    public void waitForElementPresence(WebDriver driver, String locator){
-        waitExplicit = new WebDriverWait(driver, 30);
+
+    public void waitForElementPresence(WebDriver driver, String locator) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
         by = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.presenceOfElementLocated(by));
     }
-    public void waitForElementVisible(WebDriver driver, String locator){
-        waitExplicit = new WebDriverWait(driver, longTimeout);
+
+    public void waitForElementVisible(WebDriver driver, String locator, String... values) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
+        locator = String.format(locator, (Object[]) values);
         by = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
-    public void waitForElementClickable(WebDriver driver, String locator){
-        waitExplicit = new WebDriverWait(driver, longTimeout);
+
+    public void waitForElementVisible(WebDriver driver, String locator, String value) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
+        locator = String.format(locator, value);
+        by = By.xpath(locator);
+        waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+
+    public void waitForElementClickable(WebDriver driver, String locator) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
         by = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.elementToBeClickable(by));
     }
-    public void waitForElementInvisible(WebDriver driver, String locator){
-        waitExplicit = new WebDriverWait(driver, longTimeout);
+
+    public void waitForElementInvisible(WebDriver driver, String locator) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
         by = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
-    public void waitForAlertPresence(WebDriver driver){
-        waitExplicit = new WebDriverWait(driver, longTimeout);
+
+    public void waitForAlertPresence(WebDriver driver) {
+        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
         waitExplicit.until(ExpectedConditions.alertIsPresent());
     }
-// Viết các hàm để mở ra các page đó
-    public PhieuThuPage openOnPhieuThuPage(WebDriver driver){
+
+    // Viết các hàm để mở ra các page đó
+    public PhieuThuPage openOnPhieuThuPage(WebDriver driver) {
         waitForElementVisible(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
-        if(isControlDisplayed(driver, AbstractPageUI.PHIEU_THU)){
+        if (isControlDisplayed(driver, AbstractPageUI.PHIEU_THU)) {
             clickToElement(driver, AbstractPageUI.PHIEU_THU);
-        }else {
+        } else {
             clickToElement(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
             waitForElementVisible(driver, AbstractPageUI.PHIEU_THU);
             clickToElement(driver, AbstractPageUI.PHIEU_THU);
         }
         return PageFactoryManager.getPhieuThuPage(driver);
     }
+
     public BaoNoPage openOnBaoNoPage(WebDriver driver) {
         waitForElementVisible(driver, AbstractPageUI.TIEN_MAT_NGAN_HANG);
         if (isControlDisplayed(driver, AbstractPageUI.BAO_NO)) {
@@ -282,19 +313,54 @@ public class AbstractPage {
         }
         return PageFactoryManager.getBaoNoPage(driver);
     }
-// hight light Element dùng cho hàm wait, check displayed, click, sendkey, để cho khách hàng biết mình chuẩn bị thao tác với element nào
-public void hightLightElement(WebDriver driver, String locator) {
-    javascriptExecutor = (JavascriptExecutor) driver;
-    element = driver.findElement(By.xpath(locator));
-    String originalStyle = element.getAttribute("style");
-    javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
-            "style", "border:3px solid red;border - style:dashed;");
-    try {
-        Thread.sleep(800);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+
+    // hight light Element dùng cho hàm wait, check displayed, click, sendkey, để cho khách hàng biết mình chuẩn bị thao tác với element nào
+    public void hightLightElement(WebDriver driver, String locator) {
+        javascriptExecutor = (JavascriptExecutor) driver;
+
+        element = driver.findElement(By.xpath(locator));
+        String originalStyle = element.getAttribute("style");
+        javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
+                "style", "border:3px solid red;border - style:dashed;");
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
+                "style", originalStyle);
     }
-    javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element,
-            "style", originalStyle);
-}
+
+    /* Nếu dưới 20 mình có thể return luôn ở trong đây, bằng cách dùng switch case (nếu có return thì không cần dùng break và ngược lại)
+- chỉ có thể truyền 1 biểu thức nên nếu có submenu sẽ không dùng được
+*/
+    public AbstractPage openMultiPage(WebDriver driver, String pageName, String pageNameSub) {
+        if (isControlDisplayed(driver, AbstractPageUI.DYNAMIC_LINK_SUB, pageNameSub)) {
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK_SUB, pageNameSub);
+        } else {
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK, pageName);
+            waitForElementVisible(driver, AbstractPageUI.DYNAMIC_LINK_SUB, pageNameSub);
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK_SUB, pageNameSub);
+        }
+        switch (pageNameSub) {
+            case "Báo Nợ":
+                return PageFactoryManager.getBaoNoPage(driver);
+            case "Phiếu thu":
+                return PageFactoryManager.getPhieuThuPage(driver);
+            default:
+                return PageFactoryManager.getTrangchuPage(driver);
+        }
+    }
+
+    // dùng khi có quá nhiều page
+    public void openMultiPages(WebDriver driver, String pageName, String pageNameSub) {
+        waitForElementVisible(driver, AbstractPageUI.DYNAMIC_LINK, pageName);
+        if (isControlDisplayed(driver, AbstractPageUI.DYNAMIC_LINK, pageNameSub)) {
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK, pageName);
+        } else {
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK, pageName);
+            waitForElementVisible(driver, AbstractPageUI.DYNAMIC_LINK, pageNameSub);
+            clickToElement(driver, AbstractPageUI.DYNAMIC_LINK, pageNameSub);
+        }
+    }
 }

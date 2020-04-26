@@ -14,7 +14,8 @@ public class LoginPage extends AbstractPage {
 
     public void clickComboboxCompany() {
         waitForElementVisible(driver, LoginPageUI.COMBOBOX_COMPANY);
-        sendkeyToElement(driver,LoginPageUI.COMBOBOX_COMPANY, "Chi nhánh 1" );
+        clickToElement(driver,LoginPageUI.COMBOBOX_COMPANY );
+        clickToElement(driver,LoginPageUI.CLICK_COMPANY);
     }
     public TrangChuPage clickButtonLogin() {
         waitForElementVisible(driver, LoginPageUI.LOGIN_BUTTON);
