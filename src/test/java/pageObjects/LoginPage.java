@@ -1,3 +1,7 @@
+/* check unDisplay: Dùng isDisplay: có trong dom nhưng không visible sẽ trả về fail
+- Nếu không có trong dom thì ta phải dùng findElements và size =0
+*/
+
 package pageObjects;
 
 import common.AbstractPage;

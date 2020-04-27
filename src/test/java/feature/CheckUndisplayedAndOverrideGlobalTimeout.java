@@ -14,7 +14,7 @@ import pageObjects.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class L7DynamicAndRestParamater {
+public class CheckUndisplayedAndOverrideGlobalTimeout {
     WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;

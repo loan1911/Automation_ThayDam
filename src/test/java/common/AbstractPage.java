@@ -9,8 +9,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.BaoNoPage;
 import pageObjects.PhieuThuPage;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class AbstractPage {
     WebElement element;
@@ -22,10 +24,12 @@ public class AbstractPage {
 
     // các hàm với WebBrower
     public void openAnyUrl(WebDriver driver, String URL) { // luôn luôn truyền tham số Webdriver
+
         driver.get(URL);
     }
 
     public String getCurrentPageUrl(WebDriver driver) {
+
         return driver.getCurrentUrl();
     }
 
@@ -34,6 +38,7 @@ public class AbstractPage {
     }
 
     public String getPageSourceCode(WebDriver driver) {
+
         return driver.getPageSource();
     }
 
@@ -78,7 +83,6 @@ public class AbstractPage {
         locator = String.format(locator, value);
         hightLightElement(driver, locator);
         element = driver.findElement(By.xpath(locator)); // khai báo WebElement
-        System.out.println(element);
         element.click();
     }
 
@@ -279,7 +283,7 @@ public class AbstractPage {
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
-        waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
+        waitExplicit = new WebDriverWait(driver, Constants.SHORT_TIMEOUT);
         by = By.xpath(locator);
         waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
@@ -362,5 +366,60 @@ public class AbstractPage {
             waitForElementVisible(driver, AbstractPageUI.DYNAMIC_LINK, pageNameSub);
             clickToElement(driver, AbstractPageUI.DYNAMIC_LINK, pageNameSub);
         }
+    }
+    public void waitToElementInvisible(WebDriver driver, String locator){
+        Date date = new Date();
+        By byLocator = By.xpath(locator);
+        WebDriverWait waitExplicit = new WebDriverWait(driver, Constants.SHORT_TIMEOUT);
+        waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
+        System.out.println("End time for wait visible =" + date.toString());
+        overideTimeout(driver, Constants.LONG_TIMEOUT);
+    }
+    public boolean isControlUndisplayed(WebDriver driver, String locator){
+        Date date = new Date();
+        System.out.println("Start time =" + date.toString());
+        overideTimeout(driver, Constants.SHORT_TIMEOUT);
+        List<WebElement> elements = driver.findElements(By.xpath(locator));
+
+        if(elements.size() == 0){
+            System.out.println("Element not in DOM");
+            System.out.println("End time =" + new Date().toString());
+            overideTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        } else if(elements.size() > 0 && !elements.get(0).isDisplayed()){
+            System.out.println("Element is in DOM, but visible/display");
+            System.out.println("End time =" + new Date().toString());
+            overideTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        }else {
+            System.out.println("Element is DOM and visible");
+            return false;
+        }
+    }
+    public boolean isControlUndisplayed(WebDriver driver, String locator, String... value){
+        Date date = new Date();
+        System.out.println("Start time =" + date.toString());
+        overideTimeout(driver, Constants.SHORT_TIMEOUT);
+        locator = String.format(locator, (Object[]) value);
+        List<WebElement> elements = driver.findElements(By.xpath(locator));
+
+        if(elements.size() == 0){
+            System.out.println("Element not in DOM");
+            System.out.println("End time =" + new Date().toString());
+            overideTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        } else if(elements.size() > 0 && !elements.get(0).isDisplayed()){
+            System.out.println("Element is in DOM, but visible/display");
+            System.out.println("End time =" + new Date().toString());
+            overideTimeout(driver, Constants.LONG_TIMEOUT);
+            return true;
+        }else {
+            System.out.println("Element is DOM and visible");
+            return false;
+        }
+    }
+//Để mình hàm invisible dùng short timeout (vì nó sẽ nhận lần set cuối cùng ta sẽ có 1 hàm để override timeout)
+    public void overideTimeout(WebDriver driver, int timeout){
+        driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
     }
 }
