@@ -1,17 +1,7 @@
-/* Mỗi một class ta phải chạy login 1 lần, dẫn đến tạo ra user nhiều lần
---> gom việc tạo user cho 1 class sau đó gọi ra dùng chung cho các class khác.có biến
- public static để lấy thông tin login. phải triger để cho nó chạy class đăng ký tài
- khoản đầu đầu tiên để lấy thông tin tài khoản dùng cho các class khác. ta sẽ cho chạy class
- đăng ký tài khoản chạy đầu tiên trong phần setup ở file testing.xml của testNG.
---> 1 browser khi bị crash sẽ sinh ra thêm 1 chrome driver. nếu chạy nhiều lần sẽ sinh ra
-nhiều browser trong task manager.
-- Hàm driver.quit()/close(). Nó chỉ tắt browser không tắt driver.
---> Giải pháp là dùng command line xóa luôn tất cả các chương trình, hoặc restart lại sever
-sau 1 thời gian cố định.
--- kill 1 process trong task manager (mỗi 1 process sẽ có 1 ID (Trong phần detail sẽ có PID)
---> Tắt giữa chừng thì phần after sẽ không chạy, nên ta sẽ sử dụng 1 annotation alwaysRun= true
--- Browser Driver manager là để khi browser được nâng cấp thì chrome driver cũng được nâng
-cấp theo. thay vì xóa đi và update bắng tay ta sẽ dùng bộ thư viện webdrivermanager lib
+/* Các page có nhiều element dẫn đến mình sẽ phải viết quá nhiều hàm. nên ta sẽ sử dụng
+dynamic element như dynamic page (dùng %s cho các xpath của các element có các đặc điểm
+giống nhau).
+
 */
 package feature;
 
@@ -28,7 +18,7 @@ import pageObjects.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class ShareClassStateCloseBrowserWebDriverManagerLib extends AbstractTest {
+public class POM12DynamicPageElement extends AbstractTest {
     WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;

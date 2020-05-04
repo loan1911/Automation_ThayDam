@@ -11,24 +11,11 @@ public class AbstractPageUI {
 // Nếu có nhiều dynamic ta sẽ dùng kỹ thuật Xpath Axes để bắt, ta sẽ truyền nhiều %s
     public static final String DYNAMIC_LINK_SUB = "//nav[@class='sidebar sidebar-offcanvas']//a[text()='%s']";
     public static final String DYNAMIC_LINK = "//nav[@class='sidebar sidebar-offcanvas']//span[text()='%s']";
-
+// nếu muốn 1 xpath cho cả 2 locator link menu trên ta dùng (String all_menu = " xpath1 | xpath2 ")
+    public static final String DYNAMIC_LINK_ALL_MENU = "//nav[@class='sidebar sidebar-offcanvas']//a[text()='%s']] | //nav[@class='sidebar sidebar-offcanvas']/span //a[text()='%s']]";
+    // dynamic cho Element (1 locator có thể dùng cho nhiều loại)
+    public static final String DYNAMIC_TEXTBOX_BUTTON_TEXTAREA_CHECKBOX = "(//textarea)|(//input)[@name='%s']";
+    public static final String DYNAMIC_DROPDOWN_LIST = "//select[@name='%s']";
+    public static final String DYNAMIC_ERROR_MESSAGE = "//td[contains(text(), %s)]/following-sibling::td/lable]";
 }
 
-//    public static void main(String[] args) {
-
-
-//        String DYNAMIC_LINK = "//nav[@class='sidebar sidebar-offcanvas']//a[text()='%s']";
-//        clickToLink(DYNAMIC_LINK, "10");
-
-//    }
-
-//    public static void clickToLink (String locator, String value1){
-//    locator = String.format(locator, value1);
-//    }
-//    public static void clickToLink (String locator, String value1, String value2){
-//        locator = String.format(locator, value1, value2);
-//    }
-// Nếu các kiểu dữ liệu value có kiểu dữ liệu giống nhau ta sẽ sử dụng kỹ thuật rest- parameter (tham số cuối cùng)
-//    public static void clickToLink (String locator, String... values){
-//    locator = String.format(locator, (Object[]) values);
-//}
