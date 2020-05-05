@@ -1,13 +1,13 @@
-/* Các page có nhiều element dẫn đến mình sẽ phải viết quá nhiều hàm. nên ta sẽ sử dụng
-dynamic element như dynamic page (dùng %s cho các xpath của các element có các đặc điểm
-giống nhau).
-
+/* 1 class chỉ nên bố trí 5-10 test tùy thuộc vào độ dài của testcase
+c1: Data test đưa vào phần before, quản lý tập trung
+C2: Có thể tuyền data vào file xml để chạy (nhưng không nên làm cách này). sau đó dùng parameter để lấy ra.
+C3: Tạo ra 1 testclass để chứa data của các testcase. mối class sẽ có 1 class data tương ứng
+c4: Tạo 1 file json, cài plugin json editer. add dependences thư viện json vào
 */
 package feature;
 
 import common.AbstractTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import net.thucydides.core.webdriver.WebdriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import pageObjects.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class POM12DynamicPageElement extends AbstractTest {
+public class ManageTestDataRetryTestFailed extends AbstractTest {
     WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;
@@ -54,9 +54,7 @@ public class POM12DynamicPageElement extends AbstractTest {
         loginPage.clickComboboxCompany();
         trangChuPage = loginPage.clickButtonLogin();
         trangChuPage.clickIconMenu();
-//Dùng thay thế verify cho Assert để nếu có test fail vẫn chạy tất cả test case
-//        Assert.assertTrue(trangChuPage.AssertUserName("Đồng Thị Đồng Đức"));
-        verifyTrue(trangChuPage.AssertUserName("Đồng Thị Đồng Đức"));
+        verifyFalse(trangChuPage.AssertUserName("Đồng Thị Đồng Đức"));
         baoNoPage = (BaoNoPage) trangChuPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Báo Nợ");
         phieuThuPage = (PhieuThuPage) baoNoPage.openMultiPage(driver, "TIỀN MẶT VÀ NGÂN HÀNG","Phiếu thu");
     }
